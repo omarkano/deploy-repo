@@ -8,20 +8,31 @@
     <title>Document</title>
 </head>
 <body>
-   Hello !
+   <div id="dataDisplay"></div>
 
     
-        <script>
-
-
-            function getTodos(){
-                fetch('https://jsonplaceholder.typicode.com/todos')
-                .then(response => response.json())
-                .then(json => console.log(json))
+    <script>
+        // Fetch data from the API
+        fetch('https://jsonplaceholder.typicode.com/todos')
+        .then(response => {
+            // Check if response is successful
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-            
-            getTodos();
-          
-        </script>
+            // Parse JSON response
+            return response.json();
+        })
+        .then(data => {
+            // Display data on the web page
+            const dataDisplay = document.getElementById('dataDisplay');
+            dataDisplay.innerHTML = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+        
+        getTodos();
+    
+    </script>
 </body>
 </html>
